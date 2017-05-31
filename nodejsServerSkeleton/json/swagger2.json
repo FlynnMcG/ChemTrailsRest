@@ -1,0 +1,514 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "An API for keeping track of your contacts and the companies they work for. \n\nDon't forget to take it for a spin by clicking on the **Try in Client** button next to each operation! All read operations are public and don't require authentication.\n\n<div>\n<img src='https://thecontactsapi.apispark.net/v1/img/cropped-contact-img.png' width='90%'>\n<div>\n\n<!-- ![](https://thecontactsapi.apispark.net/v1/img/cropped-contact-img.png) -->\n\n",
+    "version" : "1.2.0",
+    "title" : "Contacts API",
+    "contact" : { }
+  },
+  "host" : "thecontactsapi.restlet.net",
+  "basePath" : "/v1",
+  "tags" : [ {
+    "name" : "General"
+  }, {
+    "name" : "Chems",
+    "description" : ""
+  }, {
+    "name" : "About"
+  } ],
+  "schemes" : [ "https" ],
+  "security" : [ {
+    "HTTP_BASIC" : [ ]
+  } ],
+  "paths" : {
+    "/Chems/" : {
+      "get" : {
+        "tags" : [ "Chems" ],
+        "summary" : "Get the list of Chems",
+        "description" : "Loads a list of Chesm",
+        "operationId" : "getChems",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "$size",
+          "in" : "query",
+          "description" : "Size of the page to retrieve.",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64",
+          "x-example" : 10
+        }, {
+          "name" : "$page",
+          "in" : "query",
+          "description" : "Number of the page to retrieve.",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64",
+          "x-example" : 1
+        }, {
+          "name" : "$sort",
+          "in" : "query",
+          "description" : "Order in which to retrieve the results. Multiple sort criteria can be passed.",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "birthday DESC"
+        }, {
+          "name" : "Boiling Point",
+          "in" : "query",
+          "description" : "Allows to filter the collections of result by the value of field firstName",
+          "required" : false,
+          "type" : "number",
+          "format" : "double",
+          "x-example" : 183.0
+        }, {
+          "name" : "Melting Point",
+          "in" : "query",
+          "description" : "Allows to filter the collections of result by the value of field lastName",
+          "required" : false,
+          "type" : "number",
+          "format" : "double",
+          "x-example" : 183.0
+        }, {
+          "name" : "active",
+          "in" : "query",
+          "description" : "Allows to filter the collections of result by the value of field active",
+          "required" : false,
+          "type" : "boolean",
+          "x-example" : true
+        }, {
+          "name" : "CAS Number",
+          "in" : "query",
+          "description" : "Allows to filter the collections of result by the value of field company",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "0e8c9fb0-ad98-11e6-bf2e-47644ada7c0f"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Chem"
+              }
+            },
+            "headers" : {
+              "X-Page-Count" : {
+                "type" : "integer",
+                "format" : "int64",
+                "x-example" : "1"
+              },
+              "X-Page-Number" : {
+                "type" : "integer",
+                "format" : "int64",
+                "x-example" : "1"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "format" : "int64",
+                "x-example" : "25"
+              },
+              "X-Total-Count" : {
+                "type" : "integer",
+                "format" : "int64",
+                "x-example" : "2"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Status 400",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Chems" ],
+        "summary" : "Create a Contact",
+        "description" : "Adds a Contact",
+        "operationId" : "postChems",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Chem"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "$ref" : "#/definitions/Chem"
+            }
+          }
+        }
+      }
+    },
+    "/Chems/{chemid}" : {
+      "put" : {
+        "tags" : [ "Chems" ],
+        "summary" : "Update a Chem",
+        "description" : "Stores a chem",
+        "operationId" : "putChemsChemid",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "chemid",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Chem"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "$ref" : "#/definitions/Chem"
+            }
+          }
+        }
+      }
+    },
+    "/chem/{chemid}" : { },
+    "/chems/{chemid}" : { },
+    "/companies/" : {
+      "get" : {
+        "summary" : "Load the list of Companies",
+        "description" : "Loads a list of Company",
+        "operationId" : "getCompanies",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "$size",
+          "in" : "query",
+          "description" : "Size of the page to retrieve.",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64",
+          "x-example" : 10
+        }, {
+          "name" : "$page",
+          "in" : "query",
+          "description" : "Number of the page to retrieve.",
+          "required" : false,
+          "type" : "number",
+          "format" : "double",
+          "x-example" : 1.0
+        }, {
+          "name" : "$sort",
+          "in" : "query",
+          "description" : "Order in which to retrieve the results. Multiple sort criteria can be passed. Example: sort=age ASC,height DESC",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "name ASC"
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "Allows to filter the collections of result by the value of field name",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "George Street Brewery"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Company"
+              }
+            },
+            "headers" : {
+              "X-Page-Count" : {
+                "type" : "integer",
+                "format" : "int64",
+                "x-example" : "1"
+              },
+              "X-Page-Number" : {
+                "type" : "integer",
+                "format" : "int64",
+                "x-example" : "1"
+              },
+              "X-Page-Size" : {
+                "type" : "integer",
+                "format" : "int64",
+                "x-example" : "25"
+              },
+              "X-Total-Count" : {
+                "type" : "integer",
+                "format" : "int64",
+                "x-example" : "2"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Status 400",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Create a new Company",
+        "description" : "Adds a Company",
+        "operationId" : "postCompanies",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Company"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "$ref" : "#/definitions/Company"
+            }
+          }
+        }
+      }
+    },
+    "/companies/{companyid}" : {
+      "get" : {
+        "summary" : "Load an individual Company",
+        "description" : "Loads a Company",
+        "operationId" : "getCompaniesCompanyid",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "companyid",
+          "in" : "path",
+          "description" : "Identifier of the Company",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "0e8c9fb0-ad98-11e6-bf2e-47644ada7c0f"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "$ref" : "#/definitions/Company"
+            }
+          },
+          "400" : {
+            "description" : "Status 400",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put" : {
+        "summary" : "Update a Company",
+        "description" : "Stores a Company",
+        "operationId" : "putCompaniesCompanyid",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "companyid",
+          "in" : "path",
+          "description" : "Identifier of the Company",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "0e8c9fb0-ad98-11e6-bf2e-47644ada7c0f"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Company"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "$ref" : "#/definitions/Company"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Delete a Company",
+        "description" : "Deletes a Company",
+        "operationId" : "deleteCompaniesCompanyid",
+        "parameters" : [ {
+          "name" : "companyid",
+          "in" : "path",
+          "description" : "Identifier of the Company",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "0e8c9fb0-ad98-11e6-bf2e-47644ada7c0f"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/contacts/{contactid}" : {
+      "get" : {
+        "tags" : [ "Chems" ],
+        "summary" : "Load an individual Contact",
+        "description" : "Loads a Contact",
+        "operationId" : "getContactsContactid",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "contactid",
+          "in" : "path",
+          "description" : "Identifier of the Contact",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "0e8dd830-ad98-11e6-bf2e-47644ada7c0f"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "$ref" : "#/definitions/Chem"
+            }
+          },
+          "400" : {
+            "description" : "Status 400",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Chems" ],
+        "summary" : "Delete a Contact",
+        "description" : "Deletes a Contact",
+        "operationId" : "deleteContactsContactid",
+        "parameters" : [ {
+          "name" : "contactid",
+          "in" : "path",
+          "description" : "Identifier of the Contact",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "0e8dd830-ad98-11e6-bf2e-47644ada7c0f"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "HTTP_BASIC" : {
+      "description" : "All GET methods are public, meaning that *you can read all the data*. Write operations require authentication and therefore are forbidden to the general public.",
+      "type" : "basic"
+    }
+  },
+  "definitions" : {
+    "Company" : {
+      "type" : "object",
+      "required" : [ "address", "id", "name" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "Auto-generated primary key field"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "tags" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "address" : {
+          "$ref" : "#/definitions/Company_Address"
+        }
+      },
+      "description" : "A representation of a Company."
+    },
+    "Error" : {
+      "type" : "object",
+      "required" : [ "code" ],
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int64",
+          "minimum" : 400.0,
+          "maximum" : 599.0
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "reasonPhrase" : {
+          "type" : "string"
+        }
+      },
+      "description" : "This general error structure is used throughout this API."
+    },
+    "Chem" : {
+      "type" : "object",
+      "required" : [ "Boiling Point", "CAS Number", "Melting Point", "id" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "Auto-generated primary key field"
+        },
+        "Melting Point" : {
+          "type" : "number",
+          "format" : "double",
+          "minimum" : -273.0
+        },
+        "Boiling Point" : {
+          "type" : "number",
+          "format" : "double",
+          "minimum" : -273.0
+        },
+        "active" : {
+          "type" : "boolean",
+          "default" : true
+        },
+        "rank" : {
+          "type" : "integer",
+          "format" : "int32",
+          "minimum" : 1.0
+        },
+        "CAS Number" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "This property is a reference to a Company"
+        }
+      },
+      "description" : "A representation of a Chem."
+    },
+    "Company_Address" : {
+      "type" : "object",
+      "required" : [ "city", "street", "zipcode" ],
+      "properties" : {
+        "street" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "zipcode" : {
+          "type" : "string",
+          "pattern" : "[0-9]*"
+        }
+      }
+    }
+  }
+}
